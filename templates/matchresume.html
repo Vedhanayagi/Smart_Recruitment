@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume Matcher</title>
+</head>
+<body>
+    <h1>Smart Recruitment</h1>
+    {% if message %}
+        <p>{{ message }}</p>
+    {% endif %}
+    <form action="/matcher" method="post" enctype="multipart/form-data">
+        <label for="job_description">Job Description:</label><br>
+        <textarea id="job_description" name="job_description" rows="4" cols="50"></textarea><br>
+        <label for="resumes">Upload Resumes:</label><br>
+        <input type="file" id="resumes" name="resumes" multiple><br><br>
+        <input type="submit" value="Match Resumes">
+    </form>
+    {% if top_resumes %}
+        <h2>Top Matching Resumes:</h2>
+        <ul>
+            {% for resume, score in top_resumes|zip(similarity_scores) %}
+                <p>{{ resume }}: {{ score }}</p>
+            {% endfor %}
+
+        </ul>
+    {% endif %}
+</body>
+</html>
